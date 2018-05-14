@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.*;
 
 public class WeightedQuickUnionPathCompressionUF {
     private int[] id;//记录父节点
@@ -15,6 +16,11 @@ public class WeightedQuickUnionPathCompressionUF {
         count = n;
     }
 
+    /**
+     * weighted union
+     * @param i
+     * @param j
+     */
     public void Union(int i, int j) {
         int rooti = root(i);
         int rootj = root(j);
@@ -37,7 +43,23 @@ public class WeightedQuickUnionPathCompressionUF {
         return root(i) == root(j);
     }
 
+    // path compression by halving
+    /*public int root(int p) {
+        while (p != id[p]) {
+            id[p] = id[id[p]];    // path compression by halving
+            p = id[p];
+        }
+        return p;
+    }*/
+
+    //path compression by halving
     //find
+
+    /**
+     * find root with path compression
+     * @param i
+     * @return root
+     */
     public int root(int i) {
         int root = i;
         //find root
@@ -59,27 +81,26 @@ public class WeightedQuickUnionPathCompressionUF {
         return count;
     }
 
-    /*测试用数据10 4 3 3 8 6 5 9 4 2 1 5 0 7 2 6 1 7 3 -1
+    /*测试集为file文件夹下的tinyUF.txt
      */
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    public static void main(String[] args) throws FileNotFoundException {
+        String path = "file/tinyUF.txt";
+        File f = new File(path);
+
+        Scanner in = new Scanner(f);
         int n = in.nextInt();
         WeightedQuickUnionPathCompressionUF uf = new WeightedQuickUnionPathCompressionUF(n);
         while (in.hasNext()) {
-            int p;
-            if ((p =in.nextInt()) == -1) {
-                break;
-            }
-            //int p = in.nextInt();
+            int p = in.nextInt();
             int q = in.nextInt();
             if (uf.IsConnected(p, q)) continue;
             uf.Union(p, q);
-            System.out.println(p + " " + q);
+            //System.out.println(p + " " + q);
         }
-        for (int i = 1; i < n; i++) {
+        /*for (int i = 1; i < n; i++) {
             System.out.println(i + "-" + uf.id[i]);
 
-        }
+        }*/
         System.out.println(uf.count() + " components");
     }
 }
