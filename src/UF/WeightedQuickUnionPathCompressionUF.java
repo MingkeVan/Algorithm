@@ -1,3 +1,5 @@
+package UF;
+
 import java.util.Scanner;
 import java.io.*;
 
@@ -79,28 +81,5 @@ public class WeightedQuickUnionPathCompressionUF {
 
     public int count() {
         return count;
-    }
-
-    /*测试集为file文件夹下的tinyUF.txt
-     */
-    public static void main(String[] args) throws FileNotFoundException {
-        String path = "file/tinyUF.txt";
-        File f = new File(path);
-
-        Scanner in = new Scanner(f);
-        int n = in.nextInt();
-        WeightedQuickUnionPathCompressionUF uf = new WeightedQuickUnionPathCompressionUF(n);
-        while (in.hasNext()) {
-            int p = in.nextInt();
-            int q = in.nextInt();
-            if (uf.IsConnected(p, q)) continue;
-            uf.Union(p, q);
-            //System.out.println(p + " " + q);
-        }
-        /*for (int i = 1; i < n; i++) {
-            System.out.println(i + "-" + uf.id[i]);
-
-        }*/
-        System.out.println(uf.count() + " components");
     }
 }
